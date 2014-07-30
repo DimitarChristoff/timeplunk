@@ -1,0 +1,86 @@
+svg.tp {
+	font-size: 9px;
+	margin: 40px;
+	background-image: linear-gradient(to top, #666 0%, #333 100%);
+	box-shadow: 1px 1px 0px #333,
+	2px 2px 0px #333,
+	3px 3px 0px #333,
+	4px 4px 0px #333;
+}
+
+svg.tp .area {
+	/*fill: transparent;*/
+	fill: rgba(204,172,43,.5);
+	stroke: black;
+	stroke-width: .5px; /*0.5px;*/
+	clip-path: url(#clip);
+}
+
+svg.tp .dot {
+	fill: rgba(204,172,43,0);
+	/*fill: #ccac2b;*/
+	stroke: transparent;
+	stroke-width: 0px;
+	pointer-events: painted;
+}
+
+svg.tp .dot:hover {
+	fill: black;
+	/*fill: rgba(0, 0, 0, 0.7);*/
+}
+
+svg.tp .axis path,
+svg.tp .axis line {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+}
+
+svg.tp .brush .extent {
+	stroke: black;
+	fill-opacity: .125;
+	shape-rendering: crispEdges;
+}
+
+svg.tp g.x.axis text {
+	fill: rgba(240,240,240,.6);
+}
+svg.tp g.x.axis {
+	fill: white;
+}
+svg.tp g.x.axis text:hover {
+	/*fill: rgba(4,4,4,.8);*/
+	stroke: white;
+}
+
+/*tooltip styles  */
+.d3-tip {
+	font-size: 10px;
+	line-height: 1;
+	padding: 3px;
+	background: rgba(0, 0, 0, 0.7);
+	box-shadow: 2px 2px 1px rgba(0,0,0,.5);
+	color: #fff;
+	font-weight: normal;
+	border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+	box-sizing: border-box;
+	display: inline;
+	font-size: 10px;
+	width: 100%;
+	line-height: 1;
+	color: rgba(0, 0, 0, 0.7);
+	content: "\25BC";
+	position: absolute;
+	text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+	margin: -1px 0 0 0;
+	top: 100%;
+	left: 0;
+}
