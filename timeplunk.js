@@ -23,10 +23,10 @@
 			left: 0,
 
 			// base width/height
-			width: 245,
-			height: 70,
+			width: 300,
+			height: 90,
 
-			interpolateMethod: 'basis',
+			interpolateMethod: 'cardinal',
 
 			// xAxis
 			maxTicks: 3,
