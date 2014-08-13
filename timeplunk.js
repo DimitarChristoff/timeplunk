@@ -15,7 +15,7 @@
 	 * @constructor
 	 */
 	function TimePlunk(element, options){
-		this.options = $.extend({}, options, {
+		this.options = $.extend({}, {
 			// margins
 			top: 0,
 			bottom: 20,
@@ -26,13 +26,15 @@
 			width: 300,
 			height: 90,
 
-			interpolateMethod: 'cardinal',
+			interpolateMethod: 'linear',
 
 			// xAxis
 			maxTicks: 3,
 
+			brushEvent: 'brushend',
+
 			// date format
-			dateFormat: '%d/%m',
+			dateFormat: '%d/%m/%y',
 
 			// tooltip
 			tooltipClass: 'd3-tip',
@@ -41,9 +43,11 @@
 				return d.nice + ' <span style="color:red">' + d.y + '</span>';
 			},
 
+			onBrush: function(x, y){},
+
 			// function that parses
 			dataParser: null
-		});
+		}, options);
 
 		var o = this.options;
 
@@ -63,7 +67,7 @@
 		this._setxaxis();
 
 		// brush for selection
-		this.brush = d3.svg.brush().x(x).on('brush', this.onBrush.bind(this));
+		this.brush = d3.svg.brush().x(x).on(o.brushEvent, this.onBrush.bind(this));
 
 		// plot area
 		this.area = d3.svg.area().interpolate(o.interpolateMethod).x(function(d){
@@ -78,12 +82,23 @@
 
 	/**
 	 * Internal onBrush event handler that exports selected range
-	 * @returns {Array}
+	 * @returns {TimePlunk}
 	 */
 	TimePlunk.prototype.onBrush = function(){
 		var data = this.brush.empty() ? this.x.domain() : this.brush.extent();
-		//console.log(data[0], data[1]);
-		return data;
+		this.options.onBrush.apply(this, data);
+
+		return this;
+	};
+
+	/**
+	 *
+	 * @returns {TimePlunk}
+	 */
+	TimePlunk.prototype.resetSelection = function(){
+		d3.select('.brush').call(this.brush.clear());
+
+		return this;
 	};
 
 	TimePlunk.prototype._setxaxis = function(){
@@ -91,6 +106,10 @@
 		this.xAxis || (this.xAxis = d3.svg.axis().scale(this.x).ticks(this.options.maxTicks).orient('bottom').tickFormat(d3.time.format(this.options.dateFormat)));
 	};
 
+	/**
+	 * Used to enable tooltip if available
+	 * @returns {TimePlunk}
+	 */
 	TimePlunk.prototype.setTooltip = function(){
 		this.tip = d3.tip()
 			.attr('class', this.options.tooltipClass)
@@ -103,6 +122,8 @@
 			.attr('width', this.width)
 			.attr('height', this.height)
 			.call(this.tip);
+
+		return this;
 	};
 
 	/**
@@ -121,6 +142,7 @@
 			return item.y;
 		}))]);
 
+		this.svg.selectAll('*').remove();
 		this._setContext();
 		return this;
 	};
@@ -179,6 +201,8 @@
 			.attr('class', 'x axis')
 			.attr('transform', 'translate(0,' + height + ')')
 			.call(this.xAxis);
+
+		return this;
 	};
 
 	return TimePlunk;

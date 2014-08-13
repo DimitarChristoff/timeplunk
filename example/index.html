@@ -10,7 +10,7 @@
 </head>
 <body>
 	<svg class="tp"></svg>
-	<div class="stats"></div>
+	<div class="stats">Commits in the mootools-core repo by day</div>
 	<script src="../bower_components/jquery/dist/jquery.js"></script>
 	<script src="../bower_components/d3/d3.js"></script>
 	<script src="../bower_components/d3-tip/index.js"></script>
@@ -47,7 +47,10 @@
 			data = data.reverse();
 
 			var t = new TimePlunk('svg.tp', {
-				maxTicks: 5
+				maxTicks: 5,
+				onBrush: function(a, b){
+					console.log(a, b);
+				}
 			});
 			t.setData(data);
 			console.log(data);
