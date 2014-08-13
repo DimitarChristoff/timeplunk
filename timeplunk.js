@@ -55,7 +55,7 @@
 		this.width = o.width - o.left - o.right;
 		this.height = o.height + o.bottom;
 
-		this.svg = typeof element === 'object' ? element : d3.select(element);
+		this.svg = d3.select(element);
 		this.svg.attr('width', this.width + o.left + o.right)
 			.attr('height', this.height + o.top + o.bottom);
 
