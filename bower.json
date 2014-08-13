@@ -1,21 +1,21 @@
 {
-	"version": "0.0.1",
-	"description": "Timeline picker for D3",
-	"name": "timeplunk",
-	"main": [
-		"timeplunk.js"
-	],
-	"styles": [
-		"timeplunk.css"
-	],
-	"ignore": [
-		"example"
-	],
-	"dependencies": {
-		"bootstrap": "~3.2.0",
-		"jquery": "~1.11.0",
-		"d3": "~3.4.11",
-		"d3-tip": "~0.6.4"
-	},
-	"devDependencies": {}
+  "version": "0.0.2",
+  "description": "Timeline picker for D3",
+  "name": "timeplunk",
+  "main": [
+    "timeplunk.js"
+  ],
+  "styles": [
+    "timeplunk.css"
+  ],
+  "ignore": [
+    "example"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.2.0",
+    "jquery": "~1.11.0",
+    "d3": "~3.4.11",
+    "d3-tip": "~0.6.4"
+  },
+  "devDependencies": {}
 }
