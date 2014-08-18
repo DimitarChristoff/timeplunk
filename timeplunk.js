@@ -7,7 +7,8 @@
 			this.jQuery
 		);
 	}
-}).call(this, function(d3, $){
+}).call(this, function(d3, $, d3tip){
+	typeof d3tip === 'undefined' && (d3tip = d3.tip);
 	/**
 	 *
 	 * @param {String|HTMLElement} element to bind to
@@ -77,7 +78,7 @@
 		});
 
 		// tooltip
-		d3.tip && this.options.tooltipsEnabled && this.setTooltip();
+		d3tip && this.options.tooltipsEnabled && this.setTooltip();
 	}
 
 	/**
@@ -111,7 +112,7 @@
 	 * @returns {TimePlunk}
 	 */
 	TimePlunk.prototype.setTooltip = function(){
-		this.tip = d3.tip()
+		this.tip = d3tip()
 			.attr('class', this.options.tooltipClass)
 			.offset([-10, 0])
 			.html(this.options.tooltipFormat);
