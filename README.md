@@ -3,7 +3,7 @@ timeplunk
 
 Tiny timeline picker for d3. Used to display and normalise events on a timeline and allows for a range selection (brush).
 
-[![timeplunk in action](https://raw.githubusercontent.com/DimitarChristoff/timeplunk/master/example/tp.png)]
+![timeplunk in action](https://raw.githubusercontent.com/DimitarChristoff/timeplunk/master/example/tp.png)
 
 ## Installing
 
