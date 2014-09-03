@@ -12,7 +12,7 @@
 	"newcap": false,
 	"noarg": true,
 	"undef": true,
-	"unused": true,
+	"unused": false,
 	"strict": false,
 	"sub": true,
 	"trailing": true,

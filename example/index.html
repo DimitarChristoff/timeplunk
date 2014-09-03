@@ -2,15 +2,40 @@
 <html class="no-js">
 <head>
 	<meta charset="utf-8">
-	<title>timeline</title>
+	<title>timeplunk example</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width">
 	<link rel="shortcut icon" href="favicon.ico"/>
 	<link rel="stylesheet" href="../timeplunk.css"/>
+	<style>
+		body {
+			font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+			font-size: 11px;
+			box-sizing: border-box;
+		}
+		div.out, div.stats {
+			box-shadow: 1px 1px 0px #333,
+			2px 2px 0px #333,
+			3px 3px 0px #333,
+			4px 4px 0px #333;
+			padding: 5px;
+			background: #555555;
+			color: rgba(204,172,43,.5);
+			width: 300px;
+			box-sizing: border-box;
+			margin-bottom: 5px;
+			margin-top: 1px;
+		}
+
+		div.out strong {
+			color: white;
+		}
+	</style>
 </head>
 <body>
-	<svg class="tp"></svg>
 	<div class="stats">Commits in the mootools-core repo by day</div>
+	<svg class="tp"></svg>
+	<div class="out">No range selected</div>
 	<script src="../bower_components/jquery/dist/jquery.js"></script>
 	<script src="../bower_components/d3/d3.js"></script>
 	<script src="../bower_components/d3-tip/index.js"></script>
@@ -40,20 +65,31 @@
 				}
 			});
 
-			var data = [];
-			for (var k in perDay)
+			var out = $('.out'),
+				format = d3.time.format('%d/%m/%Y'),
+				data = [],
+				k;
+
+			for (k in perDay)
 				data.push(perDay[k]);
 
 			data = data.reverse();
 
-			var t = new TimePlunk('svg.tp', {
+			var timeplunk = new TimePlunk('svg.tp', {
 				maxTicks: 5,
 				onBrush: function(a, b){
-					console.log(a, b);
-				}
+					a = new Date(a), b = new Date(b);
+					out.html('<strong>SELECTED RANGE:</strong> ' + format(a) + ' - ' + format(b));
+				},
+				tooltipFormat: function(d){
+					return d.nice + ' <span style="color:red">' + d.y + ' commits</span>';
+				},
+				height: 110
 			});
-			t.setData(data);
-			console.log(data);
+
+			timeplunk.setData(data);
+
+			// console.log(data);
 		});
 
 	</script>

@@ -10,9 +10,9 @@
 }).call(this, function(d3, $, d3tip){
 	typeof d3tip === 'undefined' && (d3tip = d3.tip);
 	/**
-	 *
-	 * @param {String|HTMLElement} element to bind to
-	 * @param {Object} options
+	 * @class TimePlunk
+	 * @param {String} element selector to bind to
+	 * @param {Object=} options
 	 * @constructor
 	 */
 	function TimePlunk(element, options){
@@ -39,12 +39,17 @@
 
 			// tooltip
 			tooltipClass: 'd3-tip',
-			tooltipsEnabled: true,
+			tooltipsEnabled: true && d3tip,
 			tooltipFormat: function(d){
 				return d.nice + ' <span style="color:red">' + d.y + '</span>';
 			},
 
-			onBrush: function(x, y){},
+			/**
+			 * @description handler for brush selection, returns d3.brush.extent
+			 * @param {Date.toString} start
+			 * @param {Date.toString} end
+			 */
+			onBrush: function(start, end){},
 
 			// function that parses
 			dataParser: null
@@ -58,12 +63,12 @@
 
 		this.svg = d3.select(element);
 		this.svg.attr('width', this.width + o.left + o.right)
-			.attr('height', this.height + o.top + o.bottom);
+				.attr('height', this.height + o.top + o.bottom);
 
 
 		// series scaling
-		var x = this.x = d3.time.scale().range([0, this.width]);
-		var y = this.y = d3.scale.linear().range([this.height, 0]);
+		var x = this.x = d3.time.scale().range([0, this.width]),
+			y = this.y = d3.scale.linear().range([this.height, 0]);
 
 		this._setxaxis();
 
@@ -93,7 +98,7 @@
 	};
 
 	/**
-	 *
+	 * @description Removes applied brush selection
 	 * @returns {TimePlunk}
 	 */
 	TimePlunk.prototype.resetSelection = function(){
@@ -108,7 +113,7 @@
 	};
 
 	/**
-	 * Used to enable tooltip if available
+	 * @description Used to enable tooltip if available
 	 * @returns {TimePlunk}
 	 */
 	TimePlunk.prototype.setTooltip = function(){
@@ -128,11 +133,12 @@
 	};
 
 	/**
-	 * Used to set series data and parses/mods the array.
+	 * @description Used to set series data and parses/mods the array.
 	 * @param {Array} data
+	 * @param {Boolean=} clearBrush selection when truthy
 	 * @returns {TimePlunk}
 	 */
-	TimePlunk.prototype.setData = function(data){
+	TimePlunk.prototype.setData = function(data, clearBrush){
 		var o = this.options;
 		this.data = o.dataParser ? o.dataParser(data) : data;
 		this.x.domain(d3.extent(this.data.map(function(item){
@@ -145,6 +151,8 @@
 
 		this.svg.selectAll('*').remove();
 		this._setContext();
+		clearBrush && this.resetSelection();
+
 		return this;
 	};
 
@@ -197,7 +205,7 @@
 		this.tip && bars.on('mouseover', tip.show)
 						.on('mouseout', tip.hide);
 
-		// x-axis text sideways
+		// x-axis text transitions
 		context.append('g')
 			.attr('class', 'x axis')
 			.attr('transform', 'translate(0,' + height + ')')

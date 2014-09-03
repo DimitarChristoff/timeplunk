@@ -1,6 +1,6 @@
 svg.tp {
+	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 	font-size: 9px;
-	margin: 40px;
 	background-image: linear-gradient(to top, #666 0%, #333 100%);
 	box-shadow: 1px 1px 0px #333,
 	2px 2px 0px #333,
@@ -55,6 +55,7 @@ svg.tp g.x.axis text:hover {
 
 /*tooltip styles  */
 .d3-tip {
+	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 	font-size: 10px;
 	line-height: 1;
 	padding: 3px;
