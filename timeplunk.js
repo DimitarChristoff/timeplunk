@@ -175,31 +175,20 @@
 			.attr('class', 'area')
 			.attr('d', this.area); // .call(xAxis);
 
-		context.append('g')
-			.attr('class', 'x brush')
-			.call(this.brush)
-			.selectAll('rect')
-			.attr('y', -1)
-			.attr('height', this.height + 1);
-
 		this.svg.append('g')
 			.attr('class', 'x axis')
 			.attr('transform', 'translate(0,' + this.height + ')');
 
 		var bars = this.svg.selectAll('.bar')
 			.data(this.data)
-			.call(this.xAxis)
-			.enter().append('rect')
+			.enter().append('circle')
 			.attr('class', 'dot')
-			.attr('x', function(d){
+			.attr('cx', function(d){
 				return x(d.x);
 			})
-			.attr('width', 1)
-			.attr('y', function(d){
+			.attr('r', 2)
+			.attr('cy', function(d){
 				return y(d.y);
-			})
-			.attr('height', function(d){
-				return height - y(d.y);
 			});
 
 		this.tip && bars.on('mouseover', tip.show)
@@ -210,6 +199,14 @@
 			.attr('class', 'x axis')
 			.attr('transform', 'translate(0,' + height + ')')
 			.call(this.xAxis);
+
+		// add the brush last
+		context.append('g')
+			.attr('class', 'x brush')
+			.call(this.brush)
+			.selectAll('rect')
+			.attr('y', -1)
+			.attr('height', this.height + 1);
 
 		return this;
 	};

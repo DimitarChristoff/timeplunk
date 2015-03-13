@@ -19,9 +19,9 @@ svg.tp .area {
 svg.tp .dot {
 	fill: rgba(204,172,43,.3);
 	/*fill: #ccac2b;*/
-	stroke: transparent;
-	stroke-width: 0px;
-	pointer-events: painted;
+	stroke: black;
+	stroke-width: .5px;
+	/*pointer-events: painted;*/
 }
 
 svg.tp .dot:hover {
